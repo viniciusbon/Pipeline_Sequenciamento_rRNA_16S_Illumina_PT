@@ -1,1 +1,168 @@
-# 2 - [Processamento dos arquivos .fastq
+# 2 - Processamento dos arquivos .fastq
+
+### Controle de Qualidade (QC)
+
+#### Nesta etapa faremos uma inspeção da qualidade da reads R1 e R2 usando a ferramenta FastQC (Version 0.12.0), essa ferramenta fornece um relatório detalhado sobre a qualidade das reads e será usado para definir os parâmetros na etapa seguinte.
+
+A ferramenta FastQC pode ser baixada diretamente de seu reppositório ([Download](https://github.com/s-andrews/FastQC))
+
+#### O relatório é gerado um para cada amostra, em arquivo .html, e pode ser visualizado diretamente no navegador, além disso alguns arquivos secundários também são gerados e ficam com a seguinte estrutura:
+
+![Imagem](/FastQC_files.png)
+
+## Interpretar FastQC report
+
+Esta etapa é baseada no manual oficial da ferramenta, sobre os parâmetros de qualidade verificados pelo FastQC.
+
+# Resumo Detalhado dos Módulos de Análise do FastQC
+
+Este documento fornece um resumo detalhado, baseado no manual oficial, sobre os parâmetros de qualidade verificados pelo FastQC.
+
+## 1. Estatísticas Básicas (Basic Statistics)
+Este módulo gera estatísticas simples de composição para o arquivo analisado.
+
+* **Informações Apresentadas:**
+    * **Filename:** Nome original do arquivo.
+    * **File type:** Se contém chamadas de base reais ou colorspace.
+    * **Encoding:** A codificação ASCII dos valores de qualidade.
+    * **Total Sequences:** Contagem total de sequências processadas (reais e estimadas). Se o modo Casava estiver ativo, sequências filtradas são removidas desta contagem.
+    * **Sequence Length:** Comprimento da sequência mais curta e mais longa.
+    * **%GC:** Percentual geral de GC de todas as bases.
+* **Alertas:**
+    * Este módulo nunca gera um aviso (Warning) ou erro (Failure).
+
+O arquivo SRR13985627_1_fastqc (R1), obteve os sequintes, note que a R2 tem normalmente desempenho inferior:
+
+![Imagem](/sequence_quality.png)
+
+O aumento de ciclos de amplificação antes da R2 introduz mais erros nas moléculas, o que contribui para uma taxa de erro percentual já elevada.
+
+![Imagem](/R2.png)
+
+---
+
+## 2. Qualidade da Sequência por Base (Per Base Sequence Quality)
+Mostra a visão geral da gama de valores de qualidade em cada posição no arquivo FastQ.
+
+* **O Gráfico:**
+    * Usa um gráfico do tipo BoxWhisker. A linha vermelha é a mediana, a caixa amarela é o intervalo interquartil (25-75%), os "bigodes" são os pontos de 10% e 90%, e a linha azul é a média de qualidade.
+    * O fundo divide o eixo Y em qualidade muito boa (verde), razoável (laranja) e ruim (vermelha).
+* **O que Representa:**
+    * A qualidade geralmente degrada à medida que a corrida avança, então é comum ver as chamadas caindo na área laranja no final de uma leitura (read).
+* **Alertas:**
+    * **Aviso (Warning):** Quartil inferior < 10 ou mediana < 25 em qualquer base.
+    * **Falha (Failure):** Quartil inferior < 5 ou mediana < 20 em qualquer base.
+
+
+
+---
+
+## 3. Scores de Qualidade por Sequência (Per Sequence Quality Scores)
+Permite ver se um subconjunto de sequências possui valores de qualidade universalmente baixos.
+
+* **O que Representa:**
+    * Um subconjunto com má qualidade (ex: bordas do campo de visão) deve representar apenas uma pequena porcentagem do total.
+    * Se uma proporção significativa tiver baixa qualidade, pode indicar um problema sistemático (ex: falha em uma parte da flowcell).
+* **Alertas:**
+    * **Aviso (Warning):** Qualidade média mais observada < 27 (taxa de erro de 0,2%).
+    * **Falha (Failure):** Qualidade média mais observada < 20 (taxa de erro de 1%).
+
+---
+
+## 4. Conteúdo de Sequência por Base (Per Base Sequence Content)
+Plota a proporção de cada base (A, T, G, C) em cada posição.
+
+* **O que Representa:**
+    * Em uma biblioteca aleatória, as linhas devem correr paralelas com pouca diferença entre as bases.
+    * Vieses fortes que mudam em bases diferentes indicam contaminação por sequência super-representada.
+    * Viés consistente em todas as bases indica viés na biblioteca original ou problema sistemático no sequenciamento.
+* **Alertas:**
+    * **Aviso (Warning):** Diferença entre A e T, ou G e C > 10% em qualquer posição.
+    * **Falha (Failure):** Diferença entre A e T, ou G e C > 20% em qualquer posição.
+
+---
+
+## 5. Conteúdo GC por Base (Per Base GC Content)
+Plota o conteúdo GC de cada posição de base.
+
+* **O que Representa:**
+    * Em uma biblioteca aleatória, a linha deve ser horizontal e refletir o conteúdo GC do genoma.
+    * Vieses que mudam em bases diferentes podem indicar contaminação por sequência super-representada.
+* **Alertas:**
+    * **Aviso (Warning):** Conteúdo GC desvia mais de 5% da média em qualquer base.
+    * **Falha (Failure):** Conteúdo GC desvia mais de 10% da média em qualquer base.
+
+---
+
+## 6. Conteúdo GC por Sequência (Per Sequence GC Content)
+Mede o conteúdo GC de cada sequência e compara com uma distribuição normal modelada.
+
+* **O que Representa:**
+    * Espera-se uma distribuição normal onde o pico central corresponde ao GC geral do genoma.
+    * Distribuição com formato incomum pode indicar biblioteca contaminada; distribuição normal deslocada indica viés sistemático.
+* **Alertas:**
+    * **Aviso (Warning):** Soma dos desvios da distribuição normal representa mais de 15% das leituras.
+    * **Falha (Failure):** Soma dos desvios representa mais de 30% das leituras.
+
+---
+
+## 7. Conteúdo N por Base (Per Base N Content)
+Plota a porcentagem de chamadas de base "N" (sem confiança suficiente) em cada posição.
+
+* **O que Representa:**
+    * É comum ver uma proporção muito baixa de Ns, especialmente perto do fim da sequência.
+    * Proporção acima de alguns por cento sugere que o pipeline de análise falhou em interpretar os dados.
+* **Alertas:**
+    * **Aviso (Warning):** Conteúdo de N > 5% em qualquer posição.
+    * **Falha (Failure):** Conteúdo de N > 20% em qualquer posição.
+
+---
+
+## 8. Distribuição do Comprimento da Sequência (Sequence Length Distribution)
+Gera um gráfico da distribuição dos tamanhos dos fragmentos.
+
+* **O que Representa:**
+    * Alguns sequenciadores geram comprimentos uniformes, outros variados. Pipelines podem cortar (trim) sequências de má qualidade, gerando comprimentos variados.
+* **Alertas:**
+    * **Aviso (Warning):** Se as sequências não tiverem todas o mesmo comprimento.
+    * **Falha (Failure):** Se qualquer sequência tiver comprimento zero.
+
+---
+
+## 9. Sequências Duplicadas (Duplicate Sequences)
+Conta o grau de duplicação para cada sequência (analisa as primeiras 200.000 sequências para estimativa).
+
+* **O que Representa:**
+    * Baixa duplicação pode indicar alta cobertura da sequência alvo.
+    * Alta duplicação geralmente indica viés de enriquecimento (ex: super amplificação por PCR).
+    * Leituras longas (>75bp) são truncadas para 50bp para esta análise, pois erros de sequenciamento em leituras longas aumentam artificialmente a diversidade observada.
+* **Alertas:**
+    * **Aviso (Warning):** Sequências não únicas > 20% do total.
+    * **Falha (Failure):** Sequências não únicas > 50% do total.
+
+---
+
+## 10. Sequências Super-representadas (Overrepresented Sequences)
+Lista sequências que compõem mais de 0,1% do total e busca correspondências em banco de dados de contaminantes.
+
+* **O que Representa:**
+    * Uma sequência muito super-representada pode ser biologicamente significativa ou indicar contaminação/falta de diversidade.
+    * Para conservar memória, apenas sequências que aparecem nas primeiras 200.000 são rastreadas.
+* **Alertas:**
+    * **Aviso (Warning):** Qualquer sequência representando > 0,1% do total.
+    * **Falha (Failure):** Qualquer sequência representando > 1% do total.
+
+---
+
+## 11. Kmers Super-representados (Overrepresented Kmers)
+Conta o enriquecimento de cada 5-mer dentro da biblioteca.
+
+* **O que Representa:**
+    * Detecta problemas que a análise de sequência exata perde, como sequências longas com má qualidade ou sequências parciais.
+    * Calcula a razão observado/esperado baseada no conteúdo de bases da biblioteca.
+* **Alertas:**
+    * **Aviso (Warning):** Enriquecimento > 3x no geral ou > 5x em posição individual.
+    * **Falha (Failure):** Enriquecimento > 10x em qualquer posição individual.
+
+
+
