@@ -7,14 +7,14 @@ A classficação resultará em um arquivo .qzv que pode ser visualizado em ([QUI
 
 #### A partir da classificação, podemos observar os seguintes resultados:
 
-![Imagem](/QIIME2.png)
+![Imagem](/imgs/QIIME2.png)
 Podemos ver até onde foi possível chegar na escala de classificação e qual a confiança associada, com isso, alguns plots podem ser realizado ainda no QIIME2, como por exemplo, este barplot, para ver a composição de cada amostra.
 
-![Imagem](/barplot.png)
+![Imagem](/imgs/barplot.png)
 Obs: A ferramenta permite algumas personalizações.
 
 Ou até exportar para outras plataformas como iTOL:
-![Imagem](/iTOL.png)
+![Imagem](/imgs/iTOL.png)
 
 ## Os dados podem ser exportados para o R para serem usado diversas bibliotecas como phyloseq e DESeq2.
 Obs: Esta etapa será abordada em outro repositório.

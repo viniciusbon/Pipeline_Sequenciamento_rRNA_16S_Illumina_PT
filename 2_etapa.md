@@ -8,7 +8,7 @@ A ferramenta FastQC pode ser baixada diretamente de seu reppositório ([Download
 
 #### O relatório é gerado um para cada amostra, em arquivo .html, e pode ser visualizado diretamente no navegador, além disso alguns arquivos secundários também são gerados e ficam com a seguinte estrutura:
 
-![Imagem](/FastQC_files.png)
+![Imagem](/imgs/FastQC_files.png)
 
 ## Interpretar FastQC report
 
@@ -31,7 +31,7 @@ Este módulo gera estatísticas simples de composição para o arquivo analisado
 * **Alertas:**
     * Este módulo nunca gera um aviso (Warning) ou erro (Failure).
 
-![Imagem](/estatistica_basica.png)
+![Imagem](/imgs/estatistica_basica.png)
 
 ---
 
@@ -51,11 +51,11 @@ Mostra a visão geral da gama de valores de qualidade em cada posição no arqui
 
 O arquivo SRR13985627_1_fastqc (R1), obteve os sequintes, note que a R2 tem normalmente desempenho inferior:
 
-![Imagem](/sequence_quality.png)
+![Imagem](/imgs/sequence_quality.png)
 
 O aumento de ciclos de amplificação antes da R2 introduz mais erros nas moléculas, o que contribui para uma taxa de erro percentual já elevada.
 
-![Imagem](/R2.png)
+![Imagem](/imgs/R2.png)
 
 # Entendendo Scores de Qualidade e Codificação ASCII
 
@@ -101,7 +101,7 @@ Permite ver se um subconjunto de sequências possui valores de qualidade univers
     * **Aviso (Warning):** Qualidade média mais observada < 27 (taxa de erro de 0,2%).
     * **Falha (Failure):** Qualidade média mais observada < 20 (taxa de erro de 1%).
 
-![Imagem](/persequence_R1.png)
+![Imagem](/imgs/persequence_R1.png)
 ---
 
 ## 4. Conteúdo de Sequência por Base (Per Base Sequence Content)
@@ -115,7 +115,7 @@ Plota a proporção de cada base (A, T, G, C) em cada posição.
     * **Aviso (Warning):** Diferença entre A e T, ou G e C > 10% em qualquer posição.
     * **Falha (Failure):** Diferença entre A e T, ou G e C > 20% em qualquer posição.
 
-![imagem](/perbase_content.png)
+![imagem](/imgs/perbase_content.png)
 
 ---
 
@@ -129,7 +129,7 @@ Mede o conteúdo GC de cada sequência e compara com uma distribuição normal m
     * **Aviso (Warning):** Soma dos desvios da distribuição normal representa mais de 15% das leituras.
     * **Falha (Failure):** Soma dos desvios representa mais de 30% das leituras.
 
-![Imagem](/sequence_GCcontent.png)
+![Imagem](/imgs/sequence_GCcontent.png)
 ---
 
 ## 6. Conteúdo N por Base (Per Base N Content)
@@ -142,7 +142,7 @@ Plota a porcentagem de chamadas de base "N" (sem confiança suficiente) em cada 
     * **Aviso (Warning):** Conteúdo de N > 5% em qualquer posição.
     * **Falha (Failure):** Conteúdo de N > 20% em qualquer posição.
 
-![Imagem](/N_content.png)
+![Imagem](/imgs/N_content.png)
 ---
 
 ## 7. Distribuição do Comprimento da Sequência (Sequence Length Distribution)
@@ -155,7 +155,7 @@ Gera um gráfico da distribuição dos tamanhos dos fragmentos.
     * **Falha (Failure):** Se qualquer sequência tiver comprimento zero.
 
 ### Aqui podemos ver que uma grande quantidade de sequencias tem comprimento >245bp 
-![Imagem](/comprimento.png)
+![Imagem](/imgs/comprimento.png)
 
 ---
 
@@ -170,7 +170,7 @@ Conta o grau de duplicação para cada sequência (analisa as primeiras 200.000 
     * **Aviso (Warning):** Sequências não únicas > 20% do total.
     * **Falha (Failure):** Sequências não únicas > 50% do total.
 
-![Imagem](/Duplication.png)
+![Imagem](/imgs/Duplication.png)
 ---
 
 ## 9. Sequências Super-representadas (Overrepresented Sequences)

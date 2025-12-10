@@ -6,7 +6,7 @@
 
 #### O .sra é um formato binário proprietário do NCBI, usado para armazenar dados de sequenciamento brutos, com metadados internos e deve aparecer no seu terminal da seguinte forma:
 
-![Minha imagem](/sra_raw_file.png)
+![Minha imagem](/imgs/sra_raw_file.png)
 #### Vantagens: 
 
 - Mais compacto que FASTQ
@@ -15,7 +15,7 @@
 
 #### No terminal, inspecionando apenas as primeiras linhas da amostra SRR13985619.sra será observado o seguinte:
 
-![Minha imagem](/sra_raw_head.png)
+![Minha imagem](/imgs/sra_raw_head.png)
 
 #### os caracteres aparecem desta forma pois estão em formato binário proprietário e não possibilitam uma leitura inicial sem a conversão para .fastq.
 
@@ -24,10 +24,10 @@
 
 #### Os arquivos .fastq contem respectivamente em uma estrutura de 4 linhas, o identificador, as bases sequenciadas, identificador e Scores de Qualidade.
 
-![Minha imagem](/fastq_formato.png)
+![Minha imagem](/imgs/fastq_formato.png)
 
 #### No terminal, inspecionando apenas as primeiras linhas da amostra SRR13985619_1.fastq será observado o seguinte:
-![Minha imagem](/fastq_head.png)
+![Minha imagem](/imgs/fastq_head.png)
 
 
 ## Conversão usando SRA toolkit
@@ -36,7 +36,7 @@
 
 #### Usando o SRA toolkit podemos converter os arquivos tendo agora as R1 e R2 de cada amostra, teremos algo da seguinte forma:
 
-![Minha imagem](/fastq_amostras.png)
+![Minha imagem](/imgs/fastq_amostras.png)
 
 #### O sufixo _1.fastq e _2.fastq, indicam as reads R1 e R2 respectivamente.
 
