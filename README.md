@@ -13,9 +13,14 @@ Os dados foram adquiridos do BioProject identificado como: PRJNA715083, que cont
 - ### Controle de Qualidade (FastQC e MultiQC)
 - ### Trimagem (Trimmomatics)
 
+# 3 - [Importar para QUIIME2 e Denoising](3_etapa.md)
+- ### QUIIME2
+- ### DADA2
 
-Me contate para auxilio em suas análises de sequencimento:
+# 4 - [Classificação Taxonômica](4_etapa.md)
+- ### QUIIME2
 
+Para auxilio em suas análises de sequencimento:
 
 #### www.linkedin.com/in/vinicius-mantovam
 

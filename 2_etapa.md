@@ -119,20 +119,7 @@ Plota a proporção de cada base (A, T, G, C) em cada posição.
 
 ---
 
-## 5. Conteúdo GC por Base (Per Base GC Content)
-Plota o conteúdo GC de cada posição de base.
-
-* **O que Representa:**
-    * Em uma biblioteca aleatória, a linha deve ser horizontal e refletir o conteúdo GC do genoma.
-    * Vieses que mudam em bases diferentes podem indicar contaminação por sequência super-representada.
-* **Alertas:**
-    * **Aviso (Warning):** Conteúdo GC desvia mais de 5% da média em qualquer base.
-    * **Falha (Failure):** Conteúdo GC desvia mais de 10% da média em qualquer base.
-
-![Imagem](/sequence_GC%20content.png)
----
-
-## 6. Conteúdo GC por Sequência (Per Sequence GC Content)
+## 5. Conteúdo GC por Sequência (Per Sequence GC Content)
 Mede o conteúdo GC de cada sequência e compara com uma distribuição normal modelada.
 
 * **O que Representa:**
@@ -142,9 +129,10 @@ Mede o conteúdo GC de cada sequência e compara com uma distribuição normal m
     * **Aviso (Warning):** Soma dos desvios da distribuição normal representa mais de 15% das leituras.
     * **Falha (Failure):** Soma dos desvios representa mais de 30% das leituras.
 
+![Imagem](/sequence_GCcontent.png)
 ---
 
-## 7. Conteúdo N por Base (Per Base N Content)
+## 6. Conteúdo N por Base (Per Base N Content)
 Plota a porcentagem de chamadas de base "N" (sem confiança suficiente) em cada posição.
 
 * **O que Representa:**
@@ -154,9 +142,10 @@ Plota a porcentagem de chamadas de base "N" (sem confiança suficiente) em cada 
     * **Aviso (Warning):** Conteúdo de N > 5% em qualquer posição.
     * **Falha (Failure):** Conteúdo de N > 20% em qualquer posição.
 
+![Imagem](/N_content.png)
 ---
 
-## 8. Distribuição do Comprimento da Sequência (Sequence Length Distribution)
+## 7. Distribuição do Comprimento da Sequência (Sequence Length Distribution)
 Gera um gráfico da distribuição dos tamanhos dos fragmentos.
 
 * **O que Representa:**
@@ -165,9 +154,12 @@ Gera um gráfico da distribuição dos tamanhos dos fragmentos.
     * **Aviso (Warning):** Se as sequências não tiverem todas o mesmo comprimento.
     * **Falha (Failure):** Se qualquer sequência tiver comprimento zero.
 
+### Aqui podemos ver que uma grande quantidade de sequencias tem comprimento >245bp 
+![Imagem](/comprimento.png)
+
 ---
 
-## 9. Sequências Duplicadas (Duplicate Sequences)
+## 8. Sequências Duplicadas (Duplicate Sequences)
 Conta o grau de duplicação para cada sequência (analisa as primeiras 200.000 sequências para estimativa).
 
 * **O que Representa:**
@@ -178,9 +170,10 @@ Conta o grau de duplicação para cada sequência (analisa as primeiras 200.000 
     * **Aviso (Warning):** Sequências não únicas > 20% do total.
     * **Falha (Failure):** Sequências não únicas > 50% do total.
 
+![Imagem](/Duplication.png)
 ---
 
-## 10. Sequências Super-representadas (Overrepresented Sequences)
+## 9. Sequências Super-representadas (Overrepresented Sequences)
 Lista sequências que compõem mais de 0,1% do total e busca correspondências em banco de dados de contaminantes.
 
 * **O que Representa:**
@@ -192,7 +185,7 @@ Lista sequências que compõem mais de 0,1% do total e busca correspondências e
 
 ---
 
-## 11. Kmers Super-representados (Overrepresented Kmers)
+## 10. Kmers Super-representados (Overrepresented Kmers)
 Conta o enriquecimento de cada 5-mer dentro da biblioteca.
 
 * **O que Representa:**
@@ -204,3 +197,19 @@ Conta o enriquecimento de cada 5-mer dentro da biblioteca.
 
 
 
+### Feitas as observações, vamos definir os parametros para trimagem das amostras
+
+# Trimmomatic
+
+#### O Trimmomatic executa uma variedade de tarefas úteis de corte para dados Illumina pair-end e single-end. A seleção das etapas de corte e seus parâmetros associados são fornecidos na linha de comando.
+
+#### As etapas de triming atuais são:
+- ILLUMINACLIP: Remove o adaptador e outras sequências específicas da Illumina da sequência de leitura.
+- SLIDINGWINDOW: Realize o corte na janela de correr, cortando-a quando a qualidade média dentro da janela ficar abaixo de um limite predefinido.
+- LEADING: Cortar bases do início de uma leitura, se abaixo de um limite de qualidade.
+- TRAILING: Cortar bases da extremidade de uma leitura, se a qualidade estiver abaixo de um limite predefinido.
+- CROP: Corte a leitura para um comprimento especificado
+- HEADCROP: Corte o número especificado de bases a partir do início da sequência de leitura.
+- MINLEN: Descartar a leitura se ela for menor que um comprimento especificado.
+- TOPHRED33: Converter pontuações de qualidade para Phred-33
+- TOPHRED64: Converter pontuações de qualidade para Phred-64
