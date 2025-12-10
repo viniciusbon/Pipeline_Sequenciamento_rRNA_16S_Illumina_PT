@@ -19,6 +19,7 @@ Os dados foram adquiridos do BioProject identificado como: PRJNA715083, que cont
 
 # 4 - [Classificação Taxonômica](4_etapa.md)
 - ### QUIIME2
+- ### Comparação com Bibliotecas
 
 Para auxilio em suas análises de sequencimento:
 
