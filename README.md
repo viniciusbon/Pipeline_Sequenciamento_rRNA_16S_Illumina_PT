@@ -6,13 +6,17 @@ As estapas primárias e secundárias foram realizadas em ambiente Linux usando W
 
 Os dados foram adquiridos do BioProject identificado como: PRJNA715083, que contem 384 runs (5.47Gb) e emglobam apmplicons do tipo pair-end, com material coletado do intestino.
 
-# 1 - Conversão de .sra para .fastq 
+# 1 - [Conversão de .sra para .fastq](1_etapa.md)
+- ### Formato padrão NCBI para .fastq
 
-### Arquivos .sra
+# 2 - [Processamento dos arquivos .fastq](2_etapa.md)
+- ### Controle de Qualidade (FastQC e MultiQC)
+- ### Trimagem (Trimmomatics)
 
-Os arquivos .sra são o formato padrão usados pelo NCBI, logo ao fazer o download dos dados, cada uma das reads será baixada e terão esta extensão.
 
-Caso precise de auxilio em suas análises de sequencimento, deixo meu contato abaixo.
-([Linkedin](www.linkedin.com/in/vinicius-mantovam))
+Me contate para auxilio em suas análises de sequencimento:
+
+
+#### www.linkedin.com/in/vinicius-mantovam
 
 ### Atutor: Vinicius Mantovam
