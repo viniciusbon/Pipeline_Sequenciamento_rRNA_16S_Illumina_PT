@@ -31,13 +31,7 @@ Este módulo gera estatísticas simples de composição para o arquivo analisado
 * **Alertas:**
     * Este módulo nunca gera um aviso (Warning) ou erro (Failure).
 
-O arquivo SRR13985627_1_fastqc (R1), obteve os sequintes, note que a R2 tem normalmente desempenho inferior:
-
-![Imagem](/sequence_quality.png)
-
-O aumento de ciclos de amplificação antes da R2 introduz mais erros nas moléculas, o que contribui para uma taxa de erro percentual já elevada.
-
-![Imagem](/R2.png)
+![Imagem](/estatistica_basica.png)
 
 ---
 
@@ -55,7 +49,47 @@ Mostra a visão geral da gama de valores de qualidade em cada posição no arqui
 
 
 
+O arquivo SRR13985627_1_fastqc (R1), obteve os sequintes, note que a R2 tem normalmente desempenho inferior:
+
+![Imagem](/sequence_quality.png)
+
+O aumento de ciclos de amplificação antes da R2 introduz mais erros nas moléculas, o que contribui para uma taxa de erro percentual já elevada.
+
+![Imagem](/R2.png)
+
+# Entendendo Scores de Qualidade e Codificação ASCII
+
+## 1. As Colunas da Tabela
+
+* **Q (Phred Quality Score):** É a pontuação numérica da qualidade da base. Quanto maior o número, maior a confiança de que a base (A, T, C, G) foi lida corretamente.
+* **P_error (Probabilidade de Erro):** A chance matemática de a base estar errada.
+    * **Q20:** Significa 1 erro em 100 (**99%** de precisão).
+    * **Q30:** Significa 1 erro em 1000 (**99,9%** de precisão).
+    * **Q40:** Significa 1 erro em 10.000 (**99,99%** de precisão).
+* **ASCII (Character):** O caractere que você realmente vê dentro do arquivo de texto FASTQ. Para economizar espaço, em vez de escrever "40", o arquivo usa um único símbolo (como `I` ou `J`).
+
 ---
+
+## 2. A Diferença entre as Duas Tabelas (Base 33 vs. Base 64)
+
+A imagem mostra dois padrões diferentes de "tradução" (offsets). O FastQC tenta adivinhar automaticamente qual desses foi usado.
+
+### Tabela Superior: ASCII_BASE=33 (Padrão Moderno)
+Este é o padrão atual e mais comum, usado por **Sanger, Illumina (1.8+), Ion Torrent e PacBio**.
+
+* **A lógica:** O valor ASCII é igual ao Score de Qualidade + 33.
+* **Exemplo:** Se a qualidade é **0** (péssima), o código ASCII é 33, que corresponde ao símbolo `!`.
+* **Exemplo de Alta Qualidade:** Se a qualidade é **40** (excelente), o código é 40 + 33 = 73, que é a letra `I`.
+
+### Tabela Inferior: ASCII_BASE=64 (Illumina Antiga)
+Este padrão era usado em versões antigas dos sequenciadores Illumina (versões 1.3 a 1.7).
+
+* **A lógica:** O valor ASCII é igual ao Score de Qualidade + 64.
+* **Exemplo:** Se a qualidade é **0**, o código ASCII é 64, que corresponde ao símbolo `@`.
+* **Exemplo de Alta Qualidade:** Se a qualidade é **40**, o código é 40 + 64 = 104, que é a letra `h`.
+
+---
+
 
 ## 3. Scores de Qualidade por Sequência (Per Sequence Quality Scores)
 Permite ver se um subconjunto de sequências possui valores de qualidade universalmente baixos.
@@ -67,6 +101,7 @@ Permite ver se um subconjunto de sequências possui valores de qualidade univers
     * **Aviso (Warning):** Qualidade média mais observada < 27 (taxa de erro de 0,2%).
     * **Falha (Failure):** Qualidade média mais observada < 20 (taxa de erro de 1%).
 
+![Imagem](/persequence_R1.png)
 ---
 
 ## 4. Conteúdo de Sequência por Base (Per Base Sequence Content)
@@ -80,6 +115,8 @@ Plota a proporção de cada base (A, T, G, C) em cada posição.
     * **Aviso (Warning):** Diferença entre A e T, ou G e C > 10% em qualquer posição.
     * **Falha (Failure):** Diferença entre A e T, ou G e C > 20% em qualquer posição.
 
+![imagem](/perbase_content.png)
+
 ---
 
 ## 5. Conteúdo GC por Base (Per Base GC Content)
@@ -92,6 +129,7 @@ Plota o conteúdo GC de cada posição de base.
     * **Aviso (Warning):** Conteúdo GC desvia mais de 5% da média em qualquer base.
     * **Falha (Failure):** Conteúdo GC desvia mais de 10% da média em qualquer base.
 
+![Imagem](/sequence_GC%20content.png)
 ---
 
 ## 6. Conteúdo GC por Sequência (Per Sequence GC Content)
