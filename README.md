@@ -13,7 +13,6 @@ Os dados foram adquiridos do BioProject identificado como: PRJNA715083, que cont
 Os arquivos .sra são o formato padrão usados pelo NCBI, logo ao fazer o download dos dados, cada uma das reads será baixada e terão esta extensão.
 
 Caso precise de auxilio em suas análises de sequencimento, deixo meu contato abaixo.
-Linkedin: 
-www.linkedin.com/in/vinicius-mantovam
+([Linkedin](www.linkedin.com/in/vinicius-mantovam))
 
 ### Atutor: Vinicius Mantovam
